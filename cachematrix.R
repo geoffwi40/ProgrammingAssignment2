@@ -17,9 +17,8 @@
 #-----------------------------------------------------------------------
 
 # Function makeCacheMatrix:
-# This first core function returns a list of functions 
-# assocated with the matrix that operate on the value and the cached
-# results.
+# This first function returns a list comprising other functions 
+# that set and get the original matrix and the cached inverse.
 # 
 # Args:
 #   x: the source matrix
@@ -31,18 +30,27 @@
 #   $getInverse()           : Gets the cached value of the sove function
 
 makeCacheMatrix <- function(x = matrix()) {
-    inv<-NULL               #initially set the cached result to nothing
+    
+    #initially set the cached result to nothing
+    
+    inv<-NULL               
+    
+    
+    # Overwite the original matix and reset the cached result to nothing
     
     setMatrix<-function(y) {
-        x<<-y               # Overwite the original matix and
-        inv<<-NULL          # reset the cached result to nothing
+        x<<-y               
+        inv<<-NULL           
     }
+    
     
     getMatrix<-function() x         # Return the original matrix
     setInverse<-function(y) inv<<-y # Set the cached value
     getInverse<-function() inv      # Return the cached value
     
+    
     #Create the list of functions to return
+    
     list(setMatrix = setMatrix, getMatrix = getMatrix,
          setInverse = setInverse, getInverse = getInverse)  
 }
@@ -51,8 +59,8 @@ makeCacheMatrix <- function(x = matrix()) {
 
 # Function cacheSolve:
 # This second function performs the solve operation on the matrix.
-# If the value had already been calculated and cached, then the 
-# cached value is simply returned
+# If a cached value exits, that is returned else a new inverse is 
+# calculated, cached and then returned
 # 
 # Args:
 #   x: the list returned by the makeCacheMatrix function
@@ -62,15 +70,24 @@ makeCacheMatrix <- function(x = matrix()) {
 #   The inverse matrix (from cache or newly calculated)    
 
 cacheSolve <- function(x, ...) {
-    inv<-x$getInverse()             # lget the cached value
     
-    if (!is.null(inv)){             # if it exists, return it
+    # get the cached value
+    
+    inv<-x$getInverse()             
+    
+    
+    # if it exists, return it
+    
+    if (!is.null(inv)){             
         message("getting cached data")
         return(inv)        
     }
     
-    sourceMatrix<-x$getMatrix()     # if not cached, calculate the inverse
+    
+    # if not cached, calculate the inverse and cache the result
+    
+    sourceMatrix<-x$getMatrix()     
     inv<-solve(sourceMatrix,...)    
-    x$setInverse(inv)               # cache the result
+    x$setInverse(inv)               
 }
 #-----------------------------------------------------------------------
