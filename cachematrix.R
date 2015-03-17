@@ -1,9 +1,6 @@
 #------------------------------------------------------------------------
 # These functions together enable the caching of the results for 
-# the matrix inversion function known as 'Solve'
-# The value that this adds is that the 'solve' function is 
-# quite cpu intensive, so caching # the results will help reduce 
-# the overhead when this results is required frequently
+# the cpu intensive matrix inversion function known as 'Solve'
 
 # Example Usage:
 #
@@ -59,14 +56,15 @@ makeCacheMatrix <- function(x = matrix()) {
 # 
 # Args:
 #   x: the list returned by the makeCacheMatrix function
-#   ...: additional parameters passed to the 'solve' R function
+#   ...: additional parameters passed to the 'solve' function
+#
 # Returns:
-#   The inverse matrix (from cache or calculated)    
+#   The inverse matrix (from cache or newly calculated)    
 
 cacheSolve <- function(x, ...) {
-    inv<-x$getInverse()             # lookup any cached value
+    inv<-x$getInverse()             # lget the cached value
     
-    if (!is.null(inv)){             # if already cached, return this
+    if (!is.null(inv)){             # if it exists, return it
         message("getting cached data")
         return(inv)        
     }
