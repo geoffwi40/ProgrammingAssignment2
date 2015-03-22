@@ -12,6 +12,9 @@ Programming Assignment you will take advantage of the scoping rules of
 the R language and how they can be manipulated to preserve state inside
 of an R object.
 
+### Modifications
+The contents of the cacheMatrix.R file have been updated with the code I developed for this assignment
+
 ### Example: Caching the Mean of a Vector
 
 In this example we introduce the `<<-` operator which can be used to
